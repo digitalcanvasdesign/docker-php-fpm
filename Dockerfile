@@ -98,13 +98,16 @@ RUN apt-get update \
     && rm -rf /usr/local/src/php \
     \
     && apt-get purge -y --auto-remove -o APT::AutoRemove::RecommendsImportant=false $BASE_DEPENDENCIES \
-#    && apt-get clean \
+    && apt-get clean \
 # https://github.com/docker-library/php/issues/443
     && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* \
     && rm -rf /var/www/html \
     \
     && mkdir -p /var/log/php-fpm \
-    && chown www-data.www-data /var/log/php-fpm
+    && chown www-data:www-data /var/log/php-fpm
+
+COPY ./php-fpm.conf /usr/local/etc/php-fpm.conf
+COPY ./php-fpm.d/ /usr/local/etc/php-fpm.d
 
 EXPOSE 9000
 
