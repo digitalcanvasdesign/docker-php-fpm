@@ -21,7 +21,6 @@ SPECIAL=""
 semverParseInto $1 MAJOR MINOR PATCH SPECIAL
 
 TAGS=(
-    "-t $DOCKERHUB:latest"
     "-t $DOCKERHUB:$MAJOR.$MINOR-fpm"
     "-t $DOCKERHUB:$MAJOR.$MINOR.$PATCH$SPECIAL-fpm"
 )
