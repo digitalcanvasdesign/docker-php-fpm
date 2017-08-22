@@ -12,7 +12,7 @@ function semverParseInto() {
     eval $5=`echo $1 | sed -e "s#$RE#\4#"`
 }
 
-DOCKERHUB=digitalcanvasdesign/php71-fpm
+DOCKERHUB=digitalcanvasdesign/php-fpm
 MAJOR=0
 MINOR=0
 PATCH=0
