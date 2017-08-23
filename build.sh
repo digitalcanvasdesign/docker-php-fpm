@@ -12,7 +12,7 @@ function semverParseInto() {
     eval $5=`echo $1 | sed -e "s#$RE#\4#"`
 }
 
-DOCKERHUB=digitalcanvasdesign/php71-fpm
+DOCKERHUB=digitalcanvasdesign/php-fpm
 MAJOR=0
 MINOR=0
 PATCH=0
@@ -21,9 +21,8 @@ SPECIAL=""
 semverParseInto $1 MAJOR MINOR PATCH SPECIAL
 
 TAGS=(
-    "-t $DOCKERHUB:latest"
     "-t $DOCKERHUB:$MAJOR.$MINOR-fpm"
-    "-t $DOCKERHUB:$MAJOR.$MINOR.$PATCH-fpm"
+    "-t $DOCKERHUB:$MAJOR.$MINOR.$PATCH$SPECIAL-fpm"
 )
 
 docker build . ${TAGS[@]}
