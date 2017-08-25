@@ -112,4 +112,6 @@ COPY ./php-fpm.d/ /usr/local/etc/php-fpm.d
 
 EXPOSE 9000
 
+CMD ["php-fpm"]
+
 USER www-data
