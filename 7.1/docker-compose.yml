@@ -2,5 +2,5 @@ version: "2"
 
 services:
   php-fpm:
-    image: digitalcanvasdesign/php-fpm
+    image: digitalcanvasdesign/php-fpm:7.1-fpm
     build: ./
