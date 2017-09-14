@@ -4,10 +4,10 @@ LABEL maintainer="Jason Raimondi <jason@raimondi.us>"
 
 WORKDIR /usr/local/src
 
-ENV PHP_VERSION=7.2.0RC1
+ENV PHP_VERSION=7.2.0RC2
 
-ENV PHP_URL="https://downloads.php.net/~remi/php-$PHP_VERSION.tar.gz" \
-    PHP_MD5="be37fcc34305c5b7de79294cfaff2320" \
+ENV PHP_URL="https://downloads.php.net/~pollita/php-$PHP_VERSION.tar.gz" \
+    PHP_MD5="9ab8f5ce41ed49e975eb932b307259c9" \
     PHP_CFLAGS="-fstack-protector-strong -fpic -fpie -O2" \
     PHP_CPPFLAGS="$PHP_CFLAGS" \
     PHP_LDFLAGS="-Wl,-O1 -Wl,--hash-style=both -pie" \
