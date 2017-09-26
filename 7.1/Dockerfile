@@ -97,6 +97,9 @@ RUN apt-get update \
     && rm /usr/local/src/php.tgz \
     && rm -rf /usr/local/src/php \
     \
+    && ( \
+        curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin/ --filename=composer \
+    ) \
     && apt-get purge -y --auto-remove -o APT::AutoRemove::RecommendsImportant=false $BASE_DEPENDENCIES \
     && apt-get clean \
 # https://github.com/docker-library/php/issues/443
