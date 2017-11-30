@@ -4,9 +4,9 @@ LABEL maintainer="Jason Raimondi <jason@raimondi.us>"
 
 WORKDIR /usr/local/src
 
-ENV PHP_VERSION=7.2.0RC6
-ENV PHP_URL="https://downloads.php.net/~pollita/php-$PHP_VERSION.tar.gz" \
-    PHP_MD5="74b45a6dea328cd23e5ed4d52de3fcdc" \
+ENV PHP_VERSION=7.2.0
+ENV PHP_URL="https://php.net/get/php-$PHP_VERSION.tar.gz/from/this/mirror" \
+    PHP_MD5="cd35bdf6364a44e1383e3cad57c4cf54" \
     PHP_CFLAGS="-fstack-protector-strong -fpic -fpie -O2" \
     PHP_CPPFLAGS="$PHP_CFLAGS" \
     PHP_LDFLAGS="-Wl,-O1 -Wl,--hash-style=both -pie" \
@@ -54,7 +54,7 @@ ENV PHP_URL="https://downloads.php.net/~pollita/php-$PHP_VERSION.tar.gz" \
 RUN apt-get update \
     && apt-get install -y --no-install-recommends $BASE_DEPENDENCIES $BUILD_DEPENDENCIES \
     \
-    && curl $PHP_URL --output php.tgz \
+    && wget $PHP_URL -O php.tgz \
     && set -xe; \
     \
     if [ -n "$PHP_MD5" ]; then \
