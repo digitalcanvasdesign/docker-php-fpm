@@ -4,9 +4,9 @@ LABEL maintainer="Jason Raimondi <jason@raimondi.us>"
 
 WORKDIR /usr/local/src
 
-ENV PHP_VERSION=7.2.0
+ENV PHP_VERSION=7.2.1
 ENV PHP_URL="https://php.net/get/php-$PHP_VERSION.tar.gz/from/this/mirror" \
-    PHP_MD5="cd35bdf6364a44e1383e3cad57c4cf54" \
+    PHP_MD5="1a1fca9601f89a543f0681176264e49e" \
     PHP_CFLAGS="-fstack-protector-strong -fpic -fpie -O2" \
     PHP_CPPFLAGS="$PHP_CFLAGS" \
     PHP_LDFLAGS="-Wl,-O1 -Wl,--hash-style=both -pie" \
