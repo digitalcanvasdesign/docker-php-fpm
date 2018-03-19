@@ -4,15 +4,15 @@ LABEL maintainer="Jason Raimondi <jason@raimondi.us>"
 
 WORKDIR /usr/local/src
 
-ENV PHP_VERSION=7.2.1
+ENV PHP_VERSION=7.2.3
 ENV PHP_URL="https://php.net/get/php-$PHP_VERSION.tar.gz/from/this/mirror" \
-    PHP_MD5="1a1fca9601f89a543f0681176264e49e" \
+    PHP_TAR_SHA256="5dc98f2266db40c5e4d9b5edf5e29e2449e819fff8321a07eb3830cf0b104bbb" \
     PHP_CFLAGS="-fstack-protector-strong -fpic -fpie -O2" \
     PHP_CPPFLAGS="$PHP_CFLAGS" \
     PHP_LDFLAGS="-Wl,-O1 -Wl,--hash-style=both -pie" \
     PHP_EXTRA_CONFIGURE_ARGS="--enable-fpm --with-fpm-user=www-data --with-fpm-group=www-data" \
     PHP_INI_DIR="/usr/local/etc/php"  \
-    BASE_DEPENDENCIES="\
+    BUILD_DEPENDENCIES="\
         \
         autoconf \
 		dpkg-dev \
@@ -30,7 +30,7 @@ ENV PHP_URL="https://php.net/get/php-$PHP_VERSION.tar.gz/from/this/mirror" \
         libsqlite3-0 \
         xz-utils \
         wget" \
-    BUILD_DEPENDENCIES="\
+    RUN_DEPENDENCIES="\
         libedit2 \
         libfcgi-dev \
         libfcgi0ldbl \
@@ -52,13 +52,13 @@ ENV PHP_URL="https://php.net/get/php-$PHP_VERSION.tar.gz/from/this/mirror" \
         libedit-dev"
 
 RUN apt-get update \
-    && apt-get install -y --no-install-recommends $BASE_DEPENDENCIES $BUILD_DEPENDENCIES \
+    && apt-get install -y --no-install-recommends $BUILD_DEPENDENCIES $RUN_DEPENDENCIES \
     \
     && wget $PHP_URL -O php.tgz \
     && set -xe; \
     \
-    if [ -n "$PHP_MD5" ]; then \
-        echo "$PHP_MD5 *php.tgz" | md5sum -c -; \
+    if [ -n "$PHP_TAR_SHA256" ]; then \
+        echo "$PHP_TAR_SHA256 *php.tgz" | sha256sum -c -; \
     fi; \
     \
     export CFLAGS="$PHP_CFLAGS" \
@@ -100,7 +100,7 @@ RUN apt-get update \
     && ( \
         curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin/ --filename=composer \
     ) \
-    && apt-get purge -y --auto-remove -o APT::AutoRemove::RecommendsImportant=false $BASE_DEPENDENCIES \
+    && apt-get purge -y --auto-remove -o APT::AutoRemove::RecommendsImportant=false $BUILD_DEPENDENCIES \
     && apt-get clean \
 # https://github.com/docker-library/php/issues/443
     && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* \
