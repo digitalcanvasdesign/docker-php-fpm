@@ -4,15 +4,15 @@ LABEL maintainer="Jason Raimondi <jason@raimondi.us>"
 
 WORKDIR /usr/local/src
 
-ENV PHP_VERSION=7.1.13
+ENV PHP_VERSION=7.1.15
 ENV PHP_URL="https://secure.php.net/get/php-$PHP_VERSION.tar.gz/from/this/mirror" \
-    PHP_MD5="a23229cb470e08a945b56f7c057eac4a" \
+    PHP_TAR_SHA256="0669c68a52cbd2f1cfa83354918ed03b0bcaa34ed9bafaee7dfd343461b881d4" \
     PHP_CFLAGS="-fstack-protector-strong -fpic -fpie -O2" \
     PHP_CPPFLAGS="$PHP_CFLAGS" \
     PHP_LDFLAGS="-Wl,-O1 -Wl,--hash-style=both -pie" \
     PHP_EXTRA_CONFIGURE_ARGS="--enable-fpm --with-fpm-user=www-data --with-fpm-group=www-data" \
     PHP_INI_DIR="/usr/local/etc/php"  \
-    BASE_DEPENDENCIES="\
+    BUILD_DEPENDENCIES="\
         \
         autoconf \
 		dpkg-dev \
@@ -30,7 +30,7 @@ ENV PHP_URL="https://secure.php.net/get/php-$PHP_VERSION.tar.gz/from/this/mirror
         libsqlite3-0 \
         xz-utils \
         wget" \
-    BUILD_DEPENDENCIES="\
+    RUN_DEPENDENCIES="\
         libedit2 \
         libfcgi-dev \
         libfcgi0ldbl \
@@ -52,13 +52,13 @@ ENV PHP_URL="https://secure.php.net/get/php-$PHP_VERSION.tar.gz/from/this/mirror
         libedit-dev"
 
 RUN apt-get update \
-    && apt-get install -y --no-install-recommends $BASE_DEPENDENCIES $BUILD_DEPENDENCIES \
+    && apt-get install -y --no-install-recommends $BUILD_DEPENDENCIES $RUN_DEPENDENCIES \
     \
     && wget -q $PHP_URL -O php.tgz \
     && set -xe; \
     \
-    if [ -n "$PHP_MD5" ]; then \
-        echo "$PHP_MD5 *php.tgz" | md5sum -c -; \
+    if [ -n "$PHP_TAR_SHA256" ]; then \
+        echo "$PHP_TAR_SHA256 *php.tgz" | sha256sum -c -; \
     fi; \
     \
     export CFLAGS="$PHP_CFLAGS" \
@@ -100,7 +100,7 @@ RUN apt-get update \
     && ( \
         curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin/ --filename=composer \
     ) \
-    && apt-get purge -y --auto-remove -o APT::AutoRemove::RecommendsImportant=false $BASE_DEPENDENCIES \
+    && apt-get purge -y --auto-remove -o APT::AutoRemove::RecommendsImportant=false $BUILD_DEPENDENCIES \
     && apt-get clean \
 # https://github.com/docker-library/php/issues/443
     && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* \
