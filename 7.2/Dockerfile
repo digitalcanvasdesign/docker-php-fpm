@@ -4,9 +4,9 @@ LABEL maintainer="Jason Raimondi <jason@raimondi.us>"
 
 WORKDIR /usr/local/src
 
-ENV PHP_VERSION=7.2.3
+ENV PHP_VERSION=7.2.4
 ENV PHP_URL="https://php.net/get/php-$PHP_VERSION.tar.gz/from/this/mirror" \
-    PHP_TAR_SHA256="5dc98f2266db40c5e4d9b5edf5e29e2449e819fff8321a07eb3830cf0b104bbb" \
+    PHP_TAR_SHA256="58e28e978baea0fe9009432bcb436934eaacccfdcb5f5409c7526431a595857b" \
     PHP_CFLAGS="-fstack-protector-strong -fpic -fpie -O2" \
     PHP_CPPFLAGS="$PHP_CFLAGS" \
     PHP_LDFLAGS="-Wl,-O1 -Wl,--hash-style=both -pie" \
